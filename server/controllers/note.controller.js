@@ -32,3 +32,32 @@ export function addNote(req, res) {
       });
   });
 }
+
+export function getNote(req, res) {
+  Note.find().exec((err, notes) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({notes});
+  });
+}
+
+export function deleteNote(req, res) {
+  Note.findOne({id: req.params.noteId}).exec((err, note) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    note.remove(() => {
+      res.status(200).end();
+    })
+  })
+}
+
+export function editNote(req, res) {
+  Note.update({id: req.params.noteId}, req.body.note).exec((err, note) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({note});
+  })
+}
