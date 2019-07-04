@@ -2,7 +2,8 @@
 import {
   CREATE_NOTE,
   UPDATE_NOTE,
-  DELETE_NOTE
+  DELETE_NOTE,
+  EDIT_NOTE
 } from './NoteActions';
 
 // Initial State
@@ -23,6 +24,11 @@ export default function notes(state = initialState, action) {
 
     case DELETE_NOTE:
       return state.filter((note) => note.id !== action.noteId);
+
+    case EDIT_NOTE: {
+      const editedNote = { ...state[action.noteId], editing: true };
+      return { ...state, [action.noteId]: editedNote };
+    }
 
     default:
       return state;

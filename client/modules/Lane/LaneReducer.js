@@ -2,7 +2,8 @@
 import {
   CREATE_LANE,
   UPDATE_LANE,
-  DELETE_LANE
+  DELETE_LANE,
+  EDIT_LANE
 } from './LaneActions';
 
 import {
@@ -43,6 +44,11 @@ export default function lanes(state = initialState, action) {
       newLane.notes = newLane.notes.filter(noteId => noteId !== action.noteId);
   
       return { ...state, [action.laneId]: newLane };
+    }
+
+    case EDIT_LANE: {
+      const editedLane = { ...state[action.laneId], editing: true };
+      return { ...state, [action.laneId]: editedLane };
     }
 
     default:
