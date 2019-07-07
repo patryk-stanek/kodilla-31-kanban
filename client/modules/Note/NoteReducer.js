@@ -26,8 +26,15 @@ export default function notes(state = initialState, action) {
       return state.filter((note) => note.id !== action.noteId);
 
     case EDIT_NOTE: {
-      const editedNote = { ...state[action.noteId], editing: true };
-      return { ...state, [action.noteId]: editedNote };
+      // const editedNote = { ...state[action.noteId], editing: true };
+      // return { ...state, [action.noteId]: editedNote };
+
+      for (let i=0; i<state.length; i++) {
+        if (state[i].id = action.noteId) {
+          state[i].editing = true;
+        }
+      }
+      return state;
     }
 
     default:

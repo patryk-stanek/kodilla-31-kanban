@@ -47,8 +47,15 @@ export default function lanes(state = initialState, action) {
     }
 
     case EDIT_LANE: {
-      const editedLane = { ...state[action.laneId], editing: true };
-      return { ...state, [action.laneId]: editedLane };
+      // const editedLane = { ...state[action.laneId], editing: true };
+      // return { ...state, [action.laneId]: {editing: true} };
+
+      for (let i=0; i<state.length; i++) {
+        if (state[i].id = action.laneId) {
+          state[i].editing = true;
+        }
+      }
+      return state;
     }
 
     default:

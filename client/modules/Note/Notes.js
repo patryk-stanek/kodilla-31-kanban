@@ -4,7 +4,7 @@ import Note from './Note';
 import Edit from '../../components/Edit';
 
 import styles from './Note.css';
-import { updateNote, deleteNote, editNote } from './NoteActions';
+// import { updateNote, deleteNote, editNote } from './NoteActions';
 
 const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
     return (
@@ -38,6 +38,7 @@ Notes.propTypes = {
     updateNote: PropTypes.func,
     laneId: PropTypes.string,
     editNote: PropTypes.func,
+    editing: PropTypes.bool
 };
 
 export default Notes;
