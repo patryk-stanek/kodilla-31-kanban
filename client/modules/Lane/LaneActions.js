@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr';
 import callApi from '../../util/apiCaller';
 import { lanes } from '../../util/schema';
-import createNotes from '../Note/NoteActions';
+import { createNotes } from '../Note/NoteActions';
 
 // Export Constants
 export const CREATE_LANE = 'CREATE_LANE';
@@ -11,18 +11,6 @@ export const DELETE_LANE = 'DELETE_LANE';
 export const EDIT_LANE = 'EDIT_LANE';
 
 // Export Actions
-export function fetchLanes() {
-    return (dispatch) => {
-        return callApi('lanes').then(res => {
-            const normalized = normalize(res.lanes, lanes);
-            const { lanes: normalizedLanes } = normalized.entities;
-
-            dispatch(createLanes(normalizedLanes));
-            dispatch(createNotes(notes));
-        });
-    };
-}
-
 export function createLane(lane) {
     return {
         type: CREATE_LANE,
@@ -43,7 +31,7 @@ export function createLaneRequest(lane) {
 
 export function createLanes(lanesData) {
     return {
-        CREATE_LANES,
+        type: CREATE_LANES,
         lanes: lanesData,
     };
 }
@@ -57,8 +45,8 @@ export function updateLane(lane) {
 
 export function updateLaneRequest(lane) {
     return (dispatch) => {
-        return callApi(`lanes/${lane.id}`, 'put', lane).then((res) => {
-            dispatch(updateLane(res));
+        return callApi(`lanes/${lane.id}`, 'put', {...lane}).then(() => {
+            dispatch(updateLane(lane));
         });
     };
 }
@@ -72,7 +60,7 @@ export function deleteLane(laneId) {
 
 export function deleteLaneRequest(laneId) {
     return (dispatch) => {
-        return callApi(`lanes/${lane.id}`, 'delete').then(() => {
+        return callApi(`lanes/${laneId}`, 'delete').then(() => {
             dispatch(deleteLane(laneId));
         });
     };
@@ -82,5 +70,17 @@ export function editLane(laneId) {
     return {
         type: EDIT_LANE,
         laneId,
+    };
+}
+
+export function fetchLanes() {
+    return (dispatch) => {
+        return callApi('lanes').then(res => {
+            const normalized = normalize(res.lanes, lanes);
+            const { lanes: normalizedLanes, notes } = normalized.entities;
+
+            dispatch(createNotes(notes));
+            dispatch(createLanes(normalizedLanes));
+        });
     };
 }

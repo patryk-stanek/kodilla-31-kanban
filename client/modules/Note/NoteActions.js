@@ -26,7 +26,7 @@ export function createNoteRequest(note, laneId) {
 
 export function createNotes(notesData) {
     return {
-        CREATE_NOTES,
+        type: CREATE_NOTES,
         notes: notesData,
     };
 }
@@ -40,8 +40,8 @@ export function updateNote(note) {
 
 export function updateNoteRequest(note) {
     return (dispatch) => {
-        return callApi(`notes/${note.id}`, 'put', note).then((res) => {
-            dispatch(updateNote(res));
+        return callApi(`notes/${note.id}`, 'put', { ...note}).then(() => {
+            dispatch(updateNote(note));
         });
     };
 }
@@ -56,7 +56,7 @@ export function deleteNote(noteId, laneId) {
 
 export function deleteNoteRequest(noteId, laneId) {
     return (dispatch) => {
-        return callApi(`notes/${note.id}`, 'delete', {noteId, laneId}).then(() => {
+        return callApi(`notes/${noteId}`, 'delete', {noteId, laneId}).then(() => {
             dispatch(deleteNote(noteId, laneId));
         })
     }

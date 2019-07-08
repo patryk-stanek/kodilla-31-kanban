@@ -13,7 +13,6 @@ const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
                 <Note 
                     id={note.id} 
                     key={note.id}
-                    // editing={note.editing}
                 >
                     <Edit 
                         editing={note.editing}
