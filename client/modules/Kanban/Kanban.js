@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import Lanes from '../Lane/Lanes';
 import { createLaneRequest, fetchLanes } from '../Lane/LaneActions';
 
+//Drag and drop
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { compose } from 'redux';
+
 // import styles from '../Lane/Lane.css';
 import styles from './Kanban.css';
 import { create } from 'domain';
@@ -37,7 +42,7 @@ const mapDispatchToProps = {
     fetchLanes
 };
 
-export default connect(
-    mapStateToProps, 
-    mapDispatchToProps
+export default compose(
+    connect(mapDispatchToProps)(mapStateToProps),
+    DragDropContext(HTML5Backend)
 )(Kanban);
