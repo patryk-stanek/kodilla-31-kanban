@@ -43,6 +43,6 @@ const mapDispatchToProps = {
 };
 
 export default compose(
-    connect(mapDispatchToProps)(mapStateToProps),
+    connect(mapDispatchToProps, mapStateToProps),
     DragDropContext(HTML5Backend)
 )(Kanban);
