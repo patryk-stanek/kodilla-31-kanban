@@ -9,15 +9,14 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { compose } from 'redux';
 
-// import styles from '../Lane/Lane.css';
+
 import styles from './Kanban.css';
-import { create } from 'domain';
 
 const Kanban = (props) => (
     <div>
         <button
             className={styles.AddLane}
-            onClick={() => props.createLane({
+            onClick={() => props.createLaneRequest({
                 name: 'New lane',
         })}>
             Add lane
@@ -30,7 +29,7 @@ Kanban.need = [() => { return fetchLanes(); }];
 
 Kanban.propTypes = {
     lanes: PropTypes.array,
-    createLane: PropTypes.func,
+    createLaneRequest: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -38,11 +37,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    createLane: createLaneRequest,
+    createLaneRequest,
     fetchLanes
 };
 
 export default compose(
-    connect(mapDispatchToProps, mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     DragDropContext(HTML5Backend)
 )(Kanban);
